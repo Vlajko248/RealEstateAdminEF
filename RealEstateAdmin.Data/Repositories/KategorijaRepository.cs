@@ -9,9 +9,9 @@ namespace RealEstateAdmin.Data
     {
         public List<KategorijaDTO> GetAll()
         {
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                return ctx.Kategorije
+                return ctx.Kategorija
                     .OrderBy(k => k.Naziv)
                     .Select(k => new KategorijaDTO
                     {
@@ -25,35 +25,41 @@ namespace RealEstateAdmin.Data
 
         public void Insert(KategorijaDTO kategorija)
         {
-            if (kategorija == null)
-            {
-                throw new ArgumentNullException(nameof(kategorija));
-            }
+            if (kategorija == null) throw new ArgumentNullException(nameof(kategorija));
 
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                ctx.sp_Kategorija_Insert(kategorija.Naziv ?? string.Empty, kategorija.Opis ?? string.Empty);
+                ctx.Kategorija.Add(new Kategorija
+                {
+                    Naziv = kategorija.Naziv,
+                    Opis = kategorija.Opis
+                });
+                ctx.SaveChanges();
             }
         }
 
         public void Update(KategorijaDTO kategorija)
         {
-            if (kategorija == null)
-            {
-                throw new ArgumentNullException(nameof(kategorija));
-            }
+            if (kategorija == null) throw new ArgumentNullException(nameof(kategorija));
 
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                ctx.sp_Kategorija_Update(kategorija.KategorijaID, kategorija.Naziv ?? string.Empty, kategorija.Opis ?? string.Empty);
+                var entity = ctx.Kategorija.Find(kategorija.KategorijaID);
+                if (entity == null) throw new InvalidOperationException("Kategorija nije pronađena.");
+                entity.Naziv = kategorija.Naziv;
+                entity.Opis = kategorija.Opis;
+                ctx.SaveChanges();
             }
         }
 
         public void Delete(int kategorijaId)
         {
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                ctx.sp_Kategorija_Delete(kategorijaId);
+                var entity = ctx.Kategorija.Find(kategorijaId);
+                if (entity == null) throw new InvalidOperationException("Kategorija nije pronađena.");
+                ctx.Kategorija.Remove(entity);
+                ctx.SaveChanges();
             }
         }
     }

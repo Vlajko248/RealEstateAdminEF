@@ -216,7 +216,7 @@ namespace RealEstateAdmin.WinForms
             this.lblAppTitle.Name = "lblAppTitle";
             this.lblAppTitle.Size = new System.Drawing.Size(260, 90);
             this.lblAppTitle.TabIndex = 0;
-            this.lblAppTitle.Text = "RealEstate Admin\r\nLINQ to SQL";
+            this.lblAppTitle.Text = "RealEstate Admin\r\nEntity Framework";
             this.lblAppTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             //
             // pnlTopBar
@@ -400,7 +400,7 @@ namespace RealEstateAdmin.WinForms
             this.MinimumSize = new System.Drawing.Size(1200, 750);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "RealEstate Admin - LINQ to SQL";
+            this.Text = "RealEstate Admin - Entity Framework";
             this.pnlMenu.ResumeLayout(false);
             this.pnlLogo.ResumeLayout(false);
             this.pnlTopBar.ResumeLayout(false);

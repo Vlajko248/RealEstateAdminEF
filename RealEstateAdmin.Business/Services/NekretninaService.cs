@@ -17,9 +17,9 @@ namespace RealEstateAdmin.Business
             return _nekretninaRepository.GetAll();
         }
 
-        public List<NekretninaCenaViewModel> GetNekretnineCenaLeftJoin()
+        public List<NekretninaCenaViewModel> GetNekretninaCenaStat()
         {
-            return _nekretninaRepository.GetNekretnineCenaLeftJoin();
+            return _nekretninaRepository.GetNekretninaCenaStat();
         }
 
         public void Insert(NekretninaDTO nekretnina)

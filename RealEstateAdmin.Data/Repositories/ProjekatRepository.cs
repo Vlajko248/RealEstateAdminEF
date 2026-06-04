@@ -9,62 +9,64 @@ namespace RealEstateAdmin.Data
     {
         public List<ProjekatDTO> GetAll()
         {
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                return (from p in ctx.Projekti
-                        orderby p.Naziv
-                        select new ProjekatDTO
-                        {
-                            ProjekatID = p.ProjekatID,
-                            Naziv = p.Naziv ?? string.Empty,
-                            Adresa = p.Adresa ?? string.Empty,
-                            GradID = p.GradID,
-                            Opis = p.Opis ?? string.Empty,
-                            GradNaziv = p.Grad != null ? p.Grad.Naziv : string.Empty
-                        }).ToList();
+                return ctx.Projekat
+                    .OrderBy(p => p.Naziv)
+                    .Select(p => new ProjekatDTO
+                    {
+                        ProjekatID = p.ProjekatID,
+                        Naziv = p.Naziv ?? string.Empty,
+                        Adresa = p.Adresa ?? string.Empty,
+                        GradID = p.GradID,
+                        Opis = p.Opis ?? string.Empty,
+                        GradNaziv = p.Grad != null ? p.Grad.Naziv : string.Empty
+                    })
+                    .ToList();
             }
         }
 
         public void Insert(ProjekatDTO projekat)
         {
-            if (projekat == null)
-            {
-                throw new ArgumentNullException(nameof(projekat));
-            }
+            if (projekat == null) throw new ArgumentNullException(nameof(projekat));
 
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                ctx.sp_Projekat_Insert(
-                    projekat.Naziv ?? string.Empty,
-                    projekat.Adresa ?? string.Empty,
-                    projekat.GradID,
-                    projekat.Opis ?? string.Empty);
+                ctx.Projekat.Add(new Projekat
+                {
+                    Naziv = projekat.Naziv,
+                    Adresa = projekat.Adresa,
+                    GradID = projekat.GradID,
+                    Opis = projekat.Opis
+                });
+                ctx.SaveChanges();
             }
         }
 
         public void Update(ProjekatDTO projekat)
         {
-            if (projekat == null)
-            {
-                throw new ArgumentNullException(nameof(projekat));
-            }
+            if (projekat == null) throw new ArgumentNullException(nameof(projekat));
 
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                ctx.sp_Projekat_Update(
-                    projekat.ProjekatID,
-                    projekat.Naziv ?? string.Empty,
-                    projekat.Adresa ?? string.Empty,
-                    projekat.GradID,
-                    projekat.Opis ?? string.Empty);
+                var entity = ctx.Projekat.Find(projekat.ProjekatID);
+                if (entity == null) throw new InvalidOperationException("Projekat nije pronađen.");
+                entity.Naziv = projekat.Naziv;
+                entity.Adresa = projekat.Adresa;
+                entity.GradID = projekat.GradID;
+                entity.Opis = projekat.Opis;
+                ctx.SaveChanges();
             }
         }
 
         public void Delete(int projekatId)
         {
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                ctx.sp_Projekat_Delete(projekatId);
+                var entity = ctx.Projekat.Find(projekatId);
+                if (entity == null) throw new InvalidOperationException("Projekat nije pronađen.");
+                ctx.Projekat.Remove(entity);
+                ctx.SaveChanges();
             }
         }
     }

@@ -49,7 +49,7 @@ namespace RealEstateAdmin.WinForms
             this.lblNaslov.Location = new System.Drawing.Point(16, 8);
             this.lblNaslov.Name = "lblNaslov";
             this.lblNaslov.TabIndex = 0;
-            this.lblNaslov.Text = "LINQ Upit - LEFT OUTER JOIN: Nekretnine i Cene";
+            this.lblNaslov.Text = "EF LINQ Upit - Grupisanje i agregacije: Nekretnine i Cene";
             //
             // lblOpis
             //
@@ -59,7 +59,7 @@ namespace RealEstateAdmin.WinForms
             this.lblOpis.Location = new System.Drawing.Point(16, 38);
             this.lblOpis.Name = "lblOpis";
             this.lblOpis.TabIndex = 1;
-            this.lblOpis.Text = "Prikazuje sve nekretnine i njihove cene (uključujući nekretnine bez cena)  •  Realizovano LINQ to SQL LEFT OUTER JOIN upitom";
+            this.lblOpis.Text = "Prikazuje statistiku cena po nekretnini (broj, min, max, ukupno)  •  Realizovano Entity Framework GroupJoin + agregatnim metodama";
             //
             // pnlBottom
             //
@@ -128,7 +128,7 @@ namespace RealEstateAdmin.WinForms
             this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "LINQUpitiForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "LINQ Upiti - Nekretnine i Cene";
+            this.Text = "EF Upiti - Statistika cena po nekretnini";
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
             this.pnlBottom.ResumeLayout(false);

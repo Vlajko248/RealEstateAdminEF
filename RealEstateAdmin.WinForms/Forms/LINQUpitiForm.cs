@@ -21,13 +21,13 @@ namespace RealEstateAdmin.WinForms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Greška pri izvršavanju LINQ upita: {ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Greška pri izvršavanju upita: {ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void LoadLinqUpiti()
         {
-            var rezultat = _nekretninaService.GetNekretnineCenaLeftJoin();
+            var rezultat = _nekretninaService.GetNekretninaCenaStat();
 
             dgvLinqUpiti.DataSource = null;
             dgvLinqUpiti.DataSource = rezultat;
@@ -45,28 +45,28 @@ namespace RealEstateAdmin.WinForms
             if (dgvLinqUpiti.Columns["ProjekatNaziv"] != null)
                 dgvLinqUpiti.Columns["ProjekatNaziv"].HeaderText = "Projekat";
 
-            if (dgvLinqUpiti.Columns["Iznos"] != null)
+            if (dgvLinqUpiti.Columns["BrojCena"] != null)
+                dgvLinqUpiti.Columns["BrojCena"].HeaderText = "Broj cena";
+
+            if (dgvLinqUpiti.Columns["MinIznos"] != null)
             {
-                dgvLinqUpiti.Columns["Iznos"].HeaderText = "Iznos (RSD)";
-                dgvLinqUpiti.Columns["Iznos"].DefaultCellStyle.Format = "N2";
+                dgvLinqUpiti.Columns["MinIznos"].HeaderText = "Min iznos (RSD)";
+                dgvLinqUpiti.Columns["MinIznos"].DefaultCellStyle.Format = "N2";
             }
 
-            if (dgvLinqUpiti.Columns["DatumOd"] != null)
+            if (dgvLinqUpiti.Columns["MaxIznos"] != null)
             {
-                dgvLinqUpiti.Columns["DatumOd"].HeaderText = "Datum od";
-                dgvLinqUpiti.Columns["DatumOd"].DefaultCellStyle.Format = "dd.MM.yyyy";
+                dgvLinqUpiti.Columns["MaxIznos"].HeaderText = "Max iznos (RSD)";
+                dgvLinqUpiti.Columns["MaxIznos"].DefaultCellStyle.Format = "N2";
             }
 
-            if (dgvLinqUpiti.Columns["DatumDo"] != null)
+            if (dgvLinqUpiti.Columns["UkupnoIznos"] != null)
             {
-                dgvLinqUpiti.Columns["DatumDo"].HeaderText = "Datum do";
-                dgvLinqUpiti.Columns["DatumDo"].DefaultCellStyle.Format = "dd.MM.yyyy";
+                dgvLinqUpiti.Columns["UkupnoIznos"].HeaderText = "Ukupno (RSD)";
+                dgvLinqUpiti.Columns["UkupnoIznos"].DefaultCellStyle.Format = "N2";
             }
 
-            if (dgvLinqUpiti.Columns["CenaAktivna"] != null)
-                dgvLinqUpiti.Columns["CenaAktivna"].HeaderText = "Cena aktivna";
-
-            lblBrojZapisa.Text = $"Ukupno zapisa: {rezultat.Count}";
+            lblBrojZapisa.Text = $"Ukupno nekretnina: {rezultat.Count}";
         }
 
         private void btnZatvori_Click(object sender, EventArgs e)

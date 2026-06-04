@@ -9,59 +9,61 @@ namespace RealEstateAdmin.Data
     {
         public List<StrukturaDTO> GetAll()
         {
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                return (from s in ctx.Strukture
-                        orderby s.Naziv
-                        select new StrukturaDTO
-                        {
-                            StrukturaID = s.StrukturaID,
-                            KategorijaID = s.KategorijaID,
-                            Naziv = s.Naziv ?? string.Empty,
-                            Opis = s.Opis ?? string.Empty,
-                            KategorijaNaziv = s.Kategorija != null ? s.Kategorija.Naziv : string.Empty
-                        }).ToList();
+                return ctx.Struktura
+                    .OrderBy(s => s.Naziv)
+                    .Select(s => new StrukturaDTO
+                    {
+                        StrukturaID = s.StrukturaID,
+                        KategorijaID = s.KategorijaID,
+                        Naziv = s.Naziv ?? string.Empty,
+                        Opis = s.Opis ?? string.Empty,
+                        KategorijaNaziv = s.Kategorija != null ? s.Kategorija.Naziv : string.Empty
+                    })
+                    .ToList();
             }
         }
 
         public void Insert(StrukturaDTO struktura)
         {
-            if (struktura == null)
-            {
-                throw new ArgumentNullException(nameof(struktura));
-            }
+            if (struktura == null) throw new ArgumentNullException(nameof(struktura));
 
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                ctx.sp_Struktura_Insert(
-                    struktura.KategorijaID,
-                    struktura.Naziv ?? string.Empty,
-                    struktura.Opis ?? string.Empty);
+                ctx.Struktura.Add(new Struktura
+                {
+                    KategorijaID = struktura.KategorijaID,
+                    Naziv = struktura.Naziv,
+                    Opis = struktura.Opis
+                });
+                ctx.SaveChanges();
             }
         }
 
         public void Update(StrukturaDTO struktura)
         {
-            if (struktura == null)
-            {
-                throw new ArgumentNullException(nameof(struktura));
-            }
+            if (struktura == null) throw new ArgumentNullException(nameof(struktura));
 
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                ctx.sp_Struktura_Update(
-                    struktura.StrukturaID,
-                    struktura.KategorijaID,
-                    struktura.Naziv ?? string.Empty,
-                    struktura.Opis ?? string.Empty);
+                var entity = ctx.Struktura.Find(struktura.StrukturaID);
+                if (entity == null) throw new InvalidOperationException("Struktura nije pronađena.");
+                entity.KategorijaID = struktura.KategorijaID;
+                entity.Naziv = struktura.Naziv;
+                entity.Opis = struktura.Opis;
+                ctx.SaveChanges();
             }
         }
 
         public void Delete(int strukturaId)
         {
-            using (var ctx = new RealEstateDBDataContext())
+            using (var ctx = new RealEstateDBEntities())
             {
-                ctx.sp_Struktura_Delete(strukturaId);
+                var entity = ctx.Struktura.Find(strukturaId);
+                if (entity == null) throw new InvalidOperationException("Struktura nije pronađena.");
+                ctx.Struktura.Remove(entity);
+                ctx.SaveChanges();
             }
         }
     }
