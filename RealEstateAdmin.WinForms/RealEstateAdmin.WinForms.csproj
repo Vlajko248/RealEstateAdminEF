@@ -69,6 +69,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -152,6 +153,10 @@
     <ProjectReference Include="..\RealEstateAdmin.Business\RealEstateAdmin.Business.csproj">
       <Project>{c159e095-707c-4c0e-9c74-222399fb4c4e}</Project>
       <Name>RealEstateAdmin.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealEstateAdmin.Data\RealEstateAdmin.Data.csproj">
+      <Project>{98dde071-7be7-1909-be58-9312971a15cc}</Project>
+      <Name>RealEstateAdmin.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\RealEstateAdmin.DTO\RealEstateAdmin.DTO.csproj">
       <Project>{6a8f03cf-a74f-4f16-96aa-468353b44c28}</Project>
