@@ -72,13 +72,13 @@ namespace RealEstateAdmin.Data
 
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Cena.Find(cena.CenaID);
-                if (entity == null) throw new InvalidOperationException("Cena nije pronađena.");
-                entity.NekretninaID = cena.NekretninaID;
-                entity.Iznos = cena.Iznos;
-                entity.DatumOd = cena.DatumOd;
-                entity.DatumDo = cena.DatumDo;
-                entity.Aktivna = cena.Aktivna;
+                var cenaDb = ctx.Cena.Find(cena.CenaID);
+                if (cenaDb == null) throw new InvalidOperationException("Cena nije pronađena.");
+                cenaDb.NekretninaID = cena.NekretninaID;
+                cenaDb.Iznos = cena.Iznos;
+                cenaDb.DatumOd = cena.DatumOd;
+                cenaDb.DatumDo = cena.DatumDo;
+                cenaDb.Aktivna = cena.Aktivna;
                 ctx.SaveChanges();
             }
         }
@@ -87,9 +87,9 @@ namespace RealEstateAdmin.Data
         {
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Cena.Find(cenaId);
-                if (entity == null) throw new InvalidOperationException("Cena nije pronađena.");
-                ctx.Cena.Remove(entity);
+                var cena = ctx.Cena.Find(cenaId);
+                if (cena == null) throw new InvalidOperationException("Cena nije pronađena.");
+                ctx.Cena.Remove(cena);
                 ctx.SaveChanges();
             }
         }

@@ -49,12 +49,12 @@ namespace RealEstateAdmin.Data
 
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Projekat.Find(projekat.ProjekatID);
-                if (entity == null) throw new InvalidOperationException("Projekat nije pronađen.");
-                entity.Naziv = projekat.Naziv;
-                entity.Adresa = projekat.Adresa;
-                entity.GradID = projekat.GradID;
-                entity.Opis = projekat.Opis;
+                var projekatDb = ctx.Projekat.Find(projekat.ProjekatID);
+                if (projekatDb == null) throw new InvalidOperationException("Projekat nije pronađen.");
+                projekatDb.Naziv = projekat.Naziv;
+                projekatDb.Adresa = projekat.Adresa;
+                projekatDb.GradID = projekat.GradID;
+                projekatDb.Opis = projekat.Opis;
                 ctx.SaveChanges();
             }
         }
@@ -63,9 +63,9 @@ namespace RealEstateAdmin.Data
         {
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Projekat.Find(projekatId);
-                if (entity == null) throw new InvalidOperationException("Projekat nije pronađen.");
-                ctx.Projekat.Remove(entity);
+                var projekat = ctx.Projekat.Find(projekatId);
+                if (projekat == null) throw new InvalidOperationException("Projekat nije pronađen.");
+                ctx.Projekat.Remove(projekat);
                 ctx.SaveChanges();
             }
         }

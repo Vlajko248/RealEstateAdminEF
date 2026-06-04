@@ -47,11 +47,11 @@ namespace RealEstateAdmin.Data
 
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Struktura.Find(struktura.StrukturaID);
-                if (entity == null) throw new InvalidOperationException("Struktura nije pronađena.");
-                entity.KategorijaID = struktura.KategorijaID;
-                entity.Naziv = struktura.Naziv;
-                entity.Opis = struktura.Opis;
+                var strukturaDb = ctx.Struktura.Find(struktura.StrukturaID);
+                if (strukturaDb == null) throw new InvalidOperationException("Struktura nije pronađena.");
+                strukturaDb.KategorijaID = struktura.KategorijaID;
+                strukturaDb.Naziv = struktura.Naziv;
+                strukturaDb.Opis = struktura.Opis;
                 ctx.SaveChanges();
             }
         }
@@ -60,9 +60,9 @@ namespace RealEstateAdmin.Data
         {
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Struktura.Find(strukturaId);
-                if (entity == null) throw new InvalidOperationException("Struktura nije pronađena.");
-                ctx.Struktura.Remove(entity);
+                var struktura = ctx.Struktura.Find(strukturaId);
+                if (struktura == null) throw new InvalidOperationException("Struktura nije pronađena.");
+                ctx.Struktura.Remove(struktura);
                 ctx.SaveChanges();
             }
         }

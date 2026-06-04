@@ -44,10 +44,10 @@ namespace RealEstateAdmin.Data
 
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Kategorija.Find(kategorija.KategorijaID);
-                if (entity == null) throw new InvalidOperationException("Kategorija nije pronađena.");
-                entity.Naziv = kategorija.Naziv;
-                entity.Opis = kategorija.Opis;
+                var kategorijaDb = ctx.Kategorija.Find(kategorija.KategorijaID);
+                if (kategorijaDb == null) throw new InvalidOperationException("Kategorija nije pronađena.");
+                kategorijaDb.Naziv = kategorija.Naziv;
+                kategorijaDb.Opis = kategorija.Opis;
                 ctx.SaveChanges();
             }
         }
@@ -56,9 +56,9 @@ namespace RealEstateAdmin.Data
         {
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Kategorija.Find(kategorijaId);
-                if (entity == null) throw new InvalidOperationException("Kategorija nije pronađena.");
-                ctx.Kategorija.Remove(entity);
+                var kategorija = ctx.Kategorija.Find(kategorijaId);
+                if (kategorija == null) throw new InvalidOperationException("Kategorija nije pronađena.");
+                ctx.Kategorija.Remove(kategorija);
                 ctx.SaveChanges();
             }
         }

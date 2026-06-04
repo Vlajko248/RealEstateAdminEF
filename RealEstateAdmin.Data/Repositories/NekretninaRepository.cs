@@ -85,17 +85,17 @@ namespace RealEstateAdmin.Data
 
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Nekretnina.Find(nekretnina.NekretninaID);
-                if (entity == null) throw new InvalidOperationException("Nekretnina nije pronađena.");
-                entity.ProjekatID = nekretnina.ProjekatID;
-                entity.KategorijaID = nekretnina.KategorijaID;
-                entity.StrukturaID = nekretnina.StrukturaID;
-                entity.Sifra = nekretnina.Sifra;
-                entity.Naziv = nekretnina.Naziv;
-                entity.Sprat = nekretnina.Sprat;
-                entity.Kvadratura = nekretnina.Kvadratura;
-                entity.Opis = nekretnina.Opis;
-                entity.Aktivna = nekretnina.Aktivna;
+                var nekretninaDb = ctx.Nekretnina.Find(nekretnina.NekretninaID);
+                if (nekretninaDb == null) throw new InvalidOperationException("Nekretnina nije pronađena.");
+                nekretninaDb.ProjekatID = nekretnina.ProjekatID;
+                nekretninaDb.KategorijaID = nekretnina.KategorijaID;
+                nekretninaDb.StrukturaID = nekretnina.StrukturaID;
+                nekretninaDb.Sifra = nekretnina.Sifra;
+                nekretninaDb.Naziv = nekretnina.Naziv;
+                nekretninaDb.Sprat = nekretnina.Sprat;
+                nekretninaDb.Kvadratura = nekretnina.Kvadratura;
+                nekretninaDb.Opis = nekretnina.Opis;
+                nekretninaDb.Aktivna = nekretnina.Aktivna;
                 ctx.SaveChanges();
             }
         }
@@ -104,9 +104,9 @@ namespace RealEstateAdmin.Data
         {
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Nekretnina.Find(nekretninaId);
-                if (entity == null) throw new InvalidOperationException("Nekretnina nije pronađena.");
-                ctx.Nekretnina.Remove(entity);
+                var nekretnina = ctx.Nekretnina.Find(nekretninaId);
+                if (nekretnina == null) throw new InvalidOperationException("Nekretnina nije pronađena.");
+                ctx.Nekretnina.Remove(nekretnina);
                 ctx.SaveChanges();
             }
         }

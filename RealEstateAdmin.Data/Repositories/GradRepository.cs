@@ -44,10 +44,10 @@ namespace RealEstateAdmin.Data
 
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Grad.Find(grad.GradID);
-                if (entity == null) throw new InvalidOperationException("Grad nije pronađen.");
-                entity.Naziv = grad.Naziv;
-                entity.PostanskiBroj = grad.PostanskiBroj;
+                var gradDb = ctx.Grad.Find(grad.GradID);
+                if (gradDb == null) throw new InvalidOperationException("Grad nije pronađen.");
+                gradDb.Naziv = grad.Naziv;
+                gradDb.PostanskiBroj = grad.PostanskiBroj;
                 ctx.SaveChanges();
             }
         }
@@ -56,9 +56,9 @@ namespace RealEstateAdmin.Data
         {
             using (var ctx = new RealEstateDBEntities())
             {
-                var entity = ctx.Grad.Find(gradId);
-                if (entity == null) throw new InvalidOperationException("Grad nije pronađen.");
-                ctx.Grad.Remove(entity);
+                var grad = ctx.Grad.Find(gradId);
+                if (grad == null) throw new InvalidOperationException("Grad nije pronađen.");
+                ctx.Grad.Remove(grad);
                 ctx.SaveChanges();
             }
         }
