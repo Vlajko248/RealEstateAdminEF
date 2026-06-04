@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5bbf0501df9a45ddbb6c58b97d8e79a2" Name="Diagram1">
+        <EntityTypeShape EntityType="RealEstateDBModel.Cena" Width="1.5" PointX="7.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealEstateDBModel.Grad" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealEstateDBModel.Kategorija" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealEstateDBModel.Nekretnina" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealEstateDBModel.Projekat" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RealEstateDBModel.Struktura" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <AssociationConnector Association="RealEstateDBModel.FK_Cena_Nekretnina" ManuallyRouted="false" />
+        <AssociationConnector Association="RealEstateDBModel.FK_Projekat_Grad" ManuallyRouted="false" />
+        <AssociationConnector Association="RealEstateDBModel.FK_Nekretnina_Kategorija" ManuallyRouted="false" />
+        <AssociationConnector Association="RealEstateDBModel.FK_Struktura_Kategorija" ManuallyRouted="false" />
+        <AssociationConnector Association="RealEstateDBModel.FK_Nekretnina_Projekat" ManuallyRouted="false" />
+        <AssociationConnector Association="RealEstateDBModel.FK_Nekretnina_Struktura" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -33,6 +33,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,21 +45,81 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cena.cs">
+      <DependentUpon>RealEstateDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities.cs" />
+    <Compile Include="Grad.cs">
+      <DependentUpon>RealEstateDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Kategorija.cs">
+      <DependentUpon>RealEstateDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Nekretnina.cs">
+      <DependentUpon>RealEstateDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Projekat.cs">
+      <DependentUpon>RealEstateDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="RealEstateDBDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealEstateDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RealEstateDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RealEstateDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RealEstateDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RealEstateDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RealEstateDBModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\CenaRepository.cs" />
     <Compile Include="Repositories\GradRepository.cs" />
     <Compile Include="Repositories\KategorijaRepository.cs" />
     <Compile Include="Repositories\ProjekatRepository.cs" />
     <Compile Include="Repositories\StrukturaRepository.cs" />
     <Compile Include="Repositories\NekretninaRepository.cs" />
+    <Compile Include="Struktura.cs">
+      <DependentUpon>RealEstateDBModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RealEstateAdmin.DTO\RealEstateAdmin.DTO.csproj">
       <Project>{6a8f03cf-a74f-4f16-96aa-468353b44c28}</Project>
       <Name>RealEstateAdmin.DTO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="RealEstateDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RealEstateDBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="RealEstateDBModel.edmx.diagram">
+      <DependentUpon>RealEstateDBModel.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RealEstateDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RealEstateDBModel.edmx</DependentUpon>
+      <LastGenOutput>RealEstateDBModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="RealEstateDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RealEstateDBModel.edmx</DependentUpon>
+      <LastGenOutput>RealEstateDBModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

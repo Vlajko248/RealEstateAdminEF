@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RealEstateDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cena">
+          <Key>
+            <PropertyRef Name="CenaID" />
+          </Key>
+          <Property Name="CenaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NekretninaID" Type="int" Nullable="false" />
+          <Property Name="Iznos" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="DatumOd" Type="date" Nullable="false" />
+          <Property Name="DatumDo" Type="date" Nullable="false" />
+          <Property Name="Aktivna" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grad">
+          <Key>
+            <PropertyRef Name="GradID" />
+          </Key>
+          <Property Name="GradID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PostanskiBroj" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategorija">
+          <Key>
+            <PropertyRef Name="KategorijaID" />
+          </Key>
+          <Property Name="KategorijaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nekretnina">
+          <Key>
+            <PropertyRef Name="NekretninaID" />
+          </Key>
+          <Property Name="NekretninaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjekatID" Type="int" Nullable="false" />
+          <Property Name="KategorijaID" Type="int" Nullable="false" />
+          <Property Name="StrukturaID" Type="int" Nullable="false" />
+          <Property Name="Sifra" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Sprat" Type="int" Nullable="false" />
+          <Property Name="Kvadratura" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Aktivna" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projekat">
+          <Key>
+            <PropertyRef Name="ProjekatID" />
+          </Key>
+          <Property Name="ProjekatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Adresa" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="GradID" Type="int" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Struktura">
+          <Key>
+            <PropertyRef Name="StrukturaID" />
+          </Key>
+          <Property Name="StrukturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KategorijaID" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cena_Nekretnina">
+          <End Role="Nekretnina" Type="Self.Nekretnina" Multiplicity="1" />
+          <End Role="Cena" Type="Self.Cena" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nekretnina">
+              <PropertyRef Name="NekretninaID" />
+            </Principal>
+            <Dependent Role="Cena">
+              <PropertyRef Name="NekretninaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nekretnina_Kategorija">
+          <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+          <End Role="Nekretnina" Type="Self.Nekretnina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorija">
+              <PropertyRef Name="KategorijaID" />
+            </Principal>
+            <Dependent Role="Nekretnina">
+              <PropertyRef Name="KategorijaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nekretnina_Projekat">
+          <End Role="Projekat" Type="Self.Projekat" Multiplicity="1" />
+          <End Role="Nekretnina" Type="Self.Nekretnina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projekat">
+              <PropertyRef Name="ProjekatID" />
+            </Principal>
+            <Dependent Role="Nekretnina">
+              <PropertyRef Name="ProjekatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nekretnina_Struktura">
+          <End Role="Struktura" Type="Self.Struktura" Multiplicity="1" />
+          <End Role="Nekretnina" Type="Self.Nekretnina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Struktura">
+              <PropertyRef Name="StrukturaID" />
+            </Principal>
+            <Dependent Role="Nekretnina">
+              <PropertyRef Name="StrukturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projekat_Grad">
+          <End Role="Grad" Type="Self.Grad" Multiplicity="1" />
+          <End Role="Projekat" Type="Self.Projekat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grad">
+              <PropertyRef Name="GradID" />
+            </Principal>
+            <Dependent Role="Projekat">
+              <PropertyRef Name="GradID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Struktura_Kategorija">
+          <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+          <End Role="Struktura" Type="Self.Struktura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorija">
+              <PropertyRef Name="KategorijaID" />
+            </Principal>
+            <Dependent Role="Struktura">
+              <PropertyRef Name="KategorijaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RealEstateDBModelStoreContainer">
+          <EntitySet Name="Cena" EntityType="Self.Cena" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grad" EntityType="Self.Grad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategorija" EntityType="Self.Kategorija" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nekretnina" EntityType="Self.Nekretnina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projekat" EntityType="Self.Projekat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Struktura" EntityType="Self.Struktura" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cena_Nekretnina" Association="Self.FK_Cena_Nekretnina">
+            <End Role="Nekretnina" EntitySet="Nekretnina" />
+            <End Role="Cena" EntitySet="Cena" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nekretnina_Kategorija" Association="Self.FK_Nekretnina_Kategorija">
+            <End Role="Kategorija" EntitySet="Kategorija" />
+            <End Role="Nekretnina" EntitySet="Nekretnina" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nekretnina_Projekat" Association="Self.FK_Nekretnina_Projekat">
+            <End Role="Projekat" EntitySet="Projekat" />
+            <End Role="Nekretnina" EntitySet="Nekretnina" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nekretnina_Struktura" Association="Self.FK_Nekretnina_Struktura">
+            <End Role="Struktura" EntitySet="Struktura" />
+            <End Role="Nekretnina" EntitySet="Nekretnina" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projekat_Grad" Association="Self.FK_Projekat_Grad">
+            <End Role="Grad" EntitySet="Grad" />
+            <End Role="Projekat" EntitySet="Projekat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Struktura_Kategorija" Association="Self.FK_Struktura_Kategorija">
+            <End Role="Kategorija" EntitySet="Kategorija" />
+            <End Role="Struktura" EntitySet="Struktura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RealEstateDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cena">
+          <Key>
+            <PropertyRef Name="CenaID" />
+          </Key>
+          <Property Name="CenaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NekretninaID" Type="Int32" Nullable="false" />
+          <Property Name="Iznos" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="DatumOd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DatumDo" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Aktivna" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Nekretnina" Relationship="Self.FK_Cena_Nekretnina" FromRole="Cena" ToRole="Nekretnina" />
+        </EntityType>
+        <EntityType Name="Grad">
+          <Key>
+            <PropertyRef Name="GradID" />
+          </Key>
+          <Property Name="GradID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PostanskiBroj" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Projekat" Relationship="Self.FK_Projekat_Grad" FromRole="Grad" ToRole="Projekat" />
+        </EntityType>
+        <EntityType Name="Kategorija">
+          <Key>
+            <PropertyRef Name="KategorijaID" />
+          </Key>
+          <Property Name="KategorijaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Nekretnina" Relationship="Self.FK_Nekretnina_Kategorija" FromRole="Kategorija" ToRole="Nekretnina" />
+          <NavigationProperty Name="Struktura" Relationship="Self.FK_Struktura_Kategorija" FromRole="Kategorija" ToRole="Struktura" />
+        </EntityType>
+        <EntityType Name="Nekretnina">
+          <Key>
+            <PropertyRef Name="NekretninaID" />
+          </Key>
+          <Property Name="NekretninaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjekatID" Type="Int32" Nullable="false" />
+          <Property Name="KategorijaID" Type="Int32" Nullable="false" />
+          <Property Name="StrukturaID" Type="Int32" Nullable="false" />
+          <Property Name="Sifra" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sprat" Type="Int32" Nullable="false" />
+          <Property Name="Kvadratura" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Aktivna" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cena" Relationship="Self.FK_Cena_Nekretnina" FromRole="Nekretnina" ToRole="Cena" />
+          <NavigationProperty Name="Kategorija" Relationship="Self.FK_Nekretnina_Kategorija" FromRole="Nekretnina" ToRole="Kategorija" />
+          <NavigationProperty Name="Projekat" Relationship="Self.FK_Nekretnina_Projekat" FromRole="Nekretnina" ToRole="Projekat" />
+          <NavigationProperty Name="Struktura" Relationship="Self.FK_Nekretnina_Struktura" FromRole="Nekretnina" ToRole="Struktura" />
+        </EntityType>
+        <EntityType Name="Projekat">
+          <Key>
+            <PropertyRef Name="ProjekatID" />
+          </Key>
+          <Property Name="ProjekatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adresa" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GradID" Type="Int32" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Grad" Relationship="Self.FK_Projekat_Grad" FromRole="Projekat" ToRole="Grad" />
+          <NavigationProperty Name="Nekretnina" Relationship="Self.FK_Nekretnina_Projekat" FromRole="Projekat" ToRole="Nekretnina" />
+        </EntityType>
+        <EntityType Name="Struktura">
+          <Key>
+            <PropertyRef Name="StrukturaID" />
+          </Key>
+          <Property Name="StrukturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KategorijaID" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Kategorija" Relationship="Self.FK_Struktura_Kategorija" FromRole="Struktura" ToRole="Kategorija" />
+          <NavigationProperty Name="Nekretnina" Relationship="Self.FK_Nekretnina_Struktura" FromRole="Struktura" ToRole="Nekretnina" />
+        </EntityType>
+        <Association Name="FK_Cena_Nekretnina">
+          <End Role="Nekretnina" Type="Self.Nekretnina" Multiplicity="1" />
+          <End Role="Cena" Type="Self.Cena" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nekretnina">
+              <PropertyRef Name="NekretninaID" />
+            </Principal>
+            <Dependent Role="Cena">
+              <PropertyRef Name="NekretninaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projekat_Grad">
+          <End Role="Grad" Type="Self.Grad" Multiplicity="1" />
+          <End Role="Projekat" Type="Self.Projekat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grad">
+              <PropertyRef Name="GradID" />
+            </Principal>
+            <Dependent Role="Projekat">
+              <PropertyRef Name="GradID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nekretnina_Kategorija">
+          <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+          <End Role="Nekretnina" Type="Self.Nekretnina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorija">
+              <PropertyRef Name="KategorijaID" />
+            </Principal>
+            <Dependent Role="Nekretnina">
+              <PropertyRef Name="KategorijaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Struktura_Kategorija">
+          <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+          <End Role="Struktura" Type="Self.Struktura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorija">
+              <PropertyRef Name="KategorijaID" />
+            </Principal>
+            <Dependent Role="Struktura">
+              <PropertyRef Name="KategorijaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nekretnina_Projekat">
+          <End Role="Projekat" Type="Self.Projekat" Multiplicity="1" />
+          <End Role="Nekretnina" Type="Self.Nekretnina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projekat">
+              <PropertyRef Name="ProjekatID" />
+            </Principal>
+            <Dependent Role="Nekretnina">
+              <PropertyRef Name="ProjekatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nekretnina_Struktura">
+          <End Role="Struktura" Type="Self.Struktura" Multiplicity="1" />
+          <End Role="Nekretnina" Type="Self.Nekretnina" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Struktura">
+              <PropertyRef Name="StrukturaID" />
+            </Principal>
+            <Dependent Role="Nekretnina">
+              <PropertyRef Name="StrukturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RealEstateDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cena" EntityType="Self.Cena" />
+          <EntitySet Name="Grad" EntityType="Self.Grad" />
+          <EntitySet Name="Kategorija" EntityType="Self.Kategorija" />
+          <EntitySet Name="Nekretnina" EntityType="Self.Nekretnina" />
+          <EntitySet Name="Projekat" EntityType="Self.Projekat" />
+          <EntitySet Name="Struktura" EntityType="Self.Struktura" />
+          <AssociationSet Name="FK_Cena_Nekretnina" Association="Self.FK_Cena_Nekretnina">
+            <End Role="Nekretnina" EntitySet="Nekretnina" />
+            <End Role="Cena" EntitySet="Cena" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projekat_Grad" Association="Self.FK_Projekat_Grad">
+            <End Role="Grad" EntitySet="Grad" />
+            <End Role="Projekat" EntitySet="Projekat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nekretnina_Kategorija" Association="Self.FK_Nekretnina_Kategorija">
+            <End Role="Kategorija" EntitySet="Kategorija" />
+            <End Role="Nekretnina" EntitySet="Nekretnina" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Struktura_Kategorija" Association="Self.FK_Struktura_Kategorija">
+            <End Role="Kategorija" EntitySet="Kategorija" />
+            <End Role="Struktura" EntitySet="Struktura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nekretnina_Projekat" Association="Self.FK_Nekretnina_Projekat">
+            <End Role="Projekat" EntitySet="Projekat" />
+            <End Role="Nekretnina" EntitySet="Nekretnina" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nekretnina_Struktura" Association="Self.FK_Nekretnina_Struktura">
+            <End Role="Struktura" EntitySet="Struktura" />
+            <End Role="Nekretnina" EntitySet="Nekretnina" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RealEstateDBModelStoreContainer" CdmEntityContainer="RealEstateDBEntities">
+          <EntitySetMapping Name="Cena">
+            <EntityTypeMapping TypeName="RealEstateDBModel.Cena">
+              <MappingFragment StoreEntitySet="Cena">
+                <ScalarProperty Name="CenaID" ColumnName="CenaID" />
+                <ScalarProperty Name="NekretninaID" ColumnName="NekretninaID" />
+                <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+                <ScalarProperty Name="DatumOd" ColumnName="DatumOd" />
+                <ScalarProperty Name="DatumDo" ColumnName="DatumDo" />
+                <ScalarProperty Name="Aktivna" ColumnName="Aktivna" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grad">
+            <EntityTypeMapping TypeName="RealEstateDBModel.Grad">
+              <MappingFragment StoreEntitySet="Grad">
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="PostanskiBroj" ColumnName="PostanskiBroj" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategorija">
+            <EntityTypeMapping TypeName="RealEstateDBModel.Kategorija">
+              <MappingFragment StoreEntitySet="Kategorija">
+                <ScalarProperty Name="KategorijaID" ColumnName="KategorijaID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nekretnina">
+            <EntityTypeMapping TypeName="RealEstateDBModel.Nekretnina">
+              <MappingFragment StoreEntitySet="Nekretnina">
+                <ScalarProperty Name="NekretninaID" ColumnName="NekretninaID" />
+                <ScalarProperty Name="ProjekatID" ColumnName="ProjekatID" />
+                <ScalarProperty Name="KategorijaID" ColumnName="KategorijaID" />
+                <ScalarProperty Name="StrukturaID" ColumnName="StrukturaID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Sprat" ColumnName="Sprat" />
+                <ScalarProperty Name="Kvadratura" ColumnName="Kvadratura" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Aktivna" ColumnName="Aktivna" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projekat">
+            <EntityTypeMapping TypeName="RealEstateDBModel.Projekat">
+              <MappingFragment StoreEntitySet="Projekat">
+                <ScalarProperty Name="ProjekatID" ColumnName="ProjekatID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Struktura">
+            <EntityTypeMapping TypeName="RealEstateDBModel.Struktura">
+              <MappingFragment StoreEntitySet="Struktura">
+                <ScalarProperty Name="StrukturaID" ColumnName="StrukturaID" />
+                <ScalarProperty Name="KategorijaID" ColumnName="KategorijaID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
